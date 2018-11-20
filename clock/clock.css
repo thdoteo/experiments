@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+html, body {
+	height: 100%;
+
+	margin: 0;
+
+	font-family: Roboto, sans-serif;
+
+	box-sizing: border-box;
+	background: rgb(5, 5, 5);
+}
+
+.clock {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+
+	height: 100%;
+}
+
+.clock-content {
+	width: 680px;
+
+	padding: 80px;
+
+	background: rgb(15, 16, 17);
+	user-select: none;
+}
+
+.clock-letter {
+	display: inline-block;
+	width: 50px;
+
+	margin: 8px 4px;
+	padding: 10px 0;
+
+	text-align: center;
+	color: rgb(32, 32, 32);
+	font-size: 26px;
+	font-weight: 700;
+}
+
+.clock-letter_active {
+	color: rgb(148, 238, 226);
+}
+
+@media (max-width: 1024px) {
+	body {
+		background: rgb(15, 16, 17);
+	}
+	.clock-content {
+		margin: auto;
+		padding: 20px;
+	}
+	.clock-letter {
+		margin: 4px 2px;
+
+		font-size: 18px;
+	}
+}
