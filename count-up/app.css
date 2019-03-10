@@ -1,0 +1,59 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+
+	font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+	height: 100%;
+
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.counters {
+	width: 520px;
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+
+	text-align: center;
+}
+
+.counter {
+	width: 80px;
+	display: inline-block;
+}
+
+.counter .value {
+	display: block;
+	margin-bottom: 8px;
+
+	font-size: 19px;
+}
+
+.counter .label {
+	font-size: 11px;
+	color: rgb(64, 64, 64);
+}
+
+.separator {
+	display: inline-block;
+	margin-left: 5px;
+	margin-bottom: 55px;
+}
+
+@media screen and (max-width: 550px) {
+	.counters {
+		width: 250px;
+	}
+	.separator {
+		display: block;
+	}	
+}
