@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Counter</title>
+	<style>
+		.container {
+			width: 650px;
+			position: absolute;
+			top: 45%; left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		
+			font-family: 'Open Sans', sans-serif;
+		}
+
+		#timeInput {
+			width: 650px;
+			height: 200px;
+
+			font-size: 75px;
+			text-align: center;
+			color: #353535;
+			font-family: 'Open Sans', sans-serif;
+			letter-spacing: 2px;
+
+			border: 0;
+			outline: none;
+		}
+
+		.examples {
+			display: block;
+			margin-top: 70px;
+
+			font-size: 14px;
+			text-align: center;
+			font-style: italic;
+			color: #656565;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		
+		<input id="timeInput" type="text">
+		<span class="examples"></span>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script>
+
+	var isCountingDown = false;
+	var examples = ['1h10m', '10s', '45h', '120m'];
+
+	function showExamples(i) {
+		if(typeof i == 'undefined' || i == examples.length - 1) {
+			var i = -1;
+		}
+		i++;
+		$('.examples').fadeOut(function() {
+			$('.examples').text('Example : ' + examples[i]).fadeIn();
+		});
+		setTimeout(function(){ showExamples(i); }, 4000);
+	}
+
+	function countdown(hours, minutes, seconds) {
+		isCountingDown = true;
+		$('#timeInput').blur().val('');
+		if(typeof hours == 'undefined') { hours = 0; }
+		if(typeof minutes == 'undefined') { minutes = 0; }
+		if(typeof seconds == 'undefined') { seconds = 0; }
+		var howmanyseconds = (hours * 60 * 60) + (minutes * 60) + seconds;
+		if(howmanyseconds.toString().substring(0, 1) == 0) {
+			howmanyseconds = howmanyseconds.substring(1);
+		}
+		updateCountdown(howmanyseconds);
+	}
+
+	function updateCountdown(seconds) {
+		if(seconds == 0) {
+			finish();
+		} else {
+			var inputvalue = '';
+
+			// var hours = Math.floor(seconds / (60 * 60));
+			// if(hours > 0) {
+			// 	inputvalue += hours + 'h';
+			// 	// lseconds = seconds - hours * 60 * 60;
+			// }
+
+			// var minutes = Math.abs(Math.floor(seconds / 60));
+			// if(minutes > 0) {
+			// 	inputvalue += minutes + 'm';
+			// 	lseconds = lseconds - minutes * 60;
+			// 	console.log(seconds);
+			// }
+
+			// lseconds = Math.floor(lseconds);
+			// if(lseconds != 0) {
+			// 	inputvalue += lseconds + 's';
+			// }
+			// 
+			
+			
+			$('#timeInput').val(inputvalue);
+
+			var t = setTimeout(function() {
+				updateCountdown(seconds - 1);
+			}, 1000);
+		}
+	}
+
+	function finish() {
+		isCountingDown = false;
+		$('#timeInput').val('').focus();
+		var audio = new Audio('boat.mp3');
+		audio.play();
+	}
+
+	$(document).ready(function() {
+
+		showExamples();
+		$('#timeInput').focus();
+
+		$('*').on('click', function() {
+			if(!isCountingDown) {
+				$('#timeInput').focus();
+			} else {
+				$('#timeInput').blur();
+			}
+		});
+
+		$(document).keyup(function(e) {
+	        var value = $('#timeInput').val();
+	        var match = value.match(/([0-9]{1,4}h)? ?([0-9]{1,4}m)? ?([0-9]{1,4}s)?/i);
+	        
+	        if(value.length === 0 || !value.trim()) { $('#timeInput').css('color', '#353535'); return true; }
+
+
+		    if(e.which == 13) {
+		    	var ok = false;
+		    	if(match[1]) {
+		    		var hours = match[1].replace('h', '');
+		    		ok = true;
+		        }
+		        if(match[2]) {
+		    		var minutes = match[2].replace('m', '');
+		    		ok = true;
+		        }
+		        if(match[3]) {
+		    		var seconds = match[3].replace('s', '');
+		    		ok = true;
+		    	}
+		    	if(ok) {
+		    		countdown(hours, minutes, seconds);
+		    	}
+		    } else if(e.which != 13) {
+		        if(match[1] || match[2] || match[3]) { $('#timeInput').css('color', '#aae3af'); }
+		        else { $('#timeInput').css('color', '#e1a2a2'); }
+		    }
+		});
+		
+	});
+
+	</script>
+</body>
+</html>
